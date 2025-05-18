@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 // 1. Get the canvas element
-const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+const canvas = document.getElementById('canvas');
 if (!canvas) {
   throw new Error('Canvas element not found');
 }
@@ -11,10 +11,15 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color('#F0F0F0');
 
 // 3. Create a camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75, // fov
+  window.innerWidth / window.innerHeight, // aspect
+  0.1, // near
+  1000 // far
+);
 camera.position.z = 5;
 
-// 4. Create geometries and materials
+// 4. Create geometries and meshes
 const geometry = new THREE.DodecahedronGeometry();
 const material = new THREE.MeshLambertMaterial({ color: '#468585', emissive: '#468585' });
 const dodecahedron = new THREE.Mesh(geometry, material);
@@ -36,7 +41,7 @@ scene.add(light);
 const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// 7. Render loop
+// 7. Animate
 function animate() {
   requestAnimationFrame(animate);
   dodecahedron.rotation.y += 0.01;
